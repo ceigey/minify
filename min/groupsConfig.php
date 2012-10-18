@@ -8,27 +8,11 @@
  * You may wish to use the Minify URI Builder app to suggest
  * changes. http://yourdomain/min/builder/
  **/
+//[DOCUMENT_ROOT] => /web_projects/doc_control/public
 
-return array(
-    // 'js' => array('//js/file1.js', '//js/file2.js'),
-    // 'css' => array('//css/file1.css', '//css/file2.css'),
-
-    // custom source example
-    /*'js2' => array(
-        dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-        // do NOT process this file
-        new Minify_Source(array(
-            'filepath' => dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-            'minifier' => create_function('$a', 'return $a;')
-        ))
-    ),//*/
-
-    /*'js3' => array(
-        dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-        // do NOT process this file
-        new Minify_Source(array(
-            'filepath' => dirname(__FILE__) . '/../min_unit_tests/_test_files/js/before.js',
-            'minifier' => array('Minify_Packer', 'minify')
-        ))
-    ),//*/
-);
+// Use local ini files instead of this overall file where possible
+if( file_exists($_SERVER['DOCUMENT_ROOT'].'/../minify.ini') ) {
+    return parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/../minify.ini', true );
+} elseif( file_exists($_SERVER['DOCUMENT_ROOT'].'/minify.ini' )){
+    return parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/minify.ini', true );
+}

@@ -1,4 +1,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
-RewriteRule ^([a-z]=.*)  index.php?$1  [L,NE]
+RewriteBase /minify
+RewriteCond  %{REQUEST_URI}  !index.php$
+RewriteRule ^(.*)  index.php?g=$1&%{QUERY_STRING}  [L]
 </IfModule>
