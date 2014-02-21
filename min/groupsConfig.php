@@ -14,7 +14,18 @@
 //[DOCUMENT_ROOT] => /web_projects/doc_control/public
 
 // Use local ini files instead of this overall file where possible
-if( file_exists($_SERVER['DOCUMENT_ROOT'].'/../minify.ini') ) {
+if( is_dir($_SERVER['DOCUMENT_ROOT'].'/../minify.ini.d/') ) {
+    $files = glob($_SERVER['DOCUMENT_ROOT'].'/../minify.ini.d/*.ini');
+    $ini = array();
+    foreach($files as $file) {
+        $fbasename = basename($file, ".ini");
+        $thisConfig = parse_ini_file($file, true);
+        foreach($thisConfig as $key => $data) {
+            $ini[$fbasename."/".$key] = $data;
+        }
+    }
+    return $ini;
+} else if( file_exists($_SERVER['DOCUMENT_ROOT'].'/../minify.ini') ) {
     return parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/../minify.ini', true );
 } elseif( file_exists($_SERVER['DOCUMENT_ROOT'].'/minify.ini' )){
     return parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/minify.ini', true );
