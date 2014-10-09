@@ -14,7 +14,10 @@
 //[DOCUMENT_ROOT] => /web_projects/doc_control/public
 
 // Use local ini files instead of this overall file where possible
-if( is_dir($_SERVER['DOCUMENT_ROOT'].'/../minify.ini.d/') ) {
+if( file_exists($_SERVER['DOCUMENT_ROOT'].'/../minify.router.php') ) {
+    require_once($_SERVER['DOCUMENT_ROOT'].'/../minify.router.php');
+    return localMinifyRouterGroupConfig(1);
+} else if( is_dir($_SERVER['DOCUMENT_ROOT'].'/../minify.ini.d/') ) {
     $files = glob($_SERVER['DOCUMENT_ROOT'].'/../minify.ini.d/*.ini');
     $ini = array();
     foreach($files as $file) {
